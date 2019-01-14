@@ -29,6 +29,10 @@ param(
 Out-TeXStyle qsharp
 Out-TeXStyleDocumentation qsharp
 
+# Record the changelog and regenerate.
+makeindex -s gglo.ist -o qsharp.gls qsharp.glo
+Out-TeXStyleDocumentation qsharp
+
 Install-TeXUserResource tex/latex/qsharp qsharp.sty, qsharp.pdf
 
 if ($CTAN) {
