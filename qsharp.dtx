@@ -97,14 +97,10 @@
 %
 %       /// # Summary
 %       /// Prepares $(\ket{00} + \ket{11}) / \sqrt{2}$.
-%       operation PrepareEntangledPair(left : Qubit, right : Qubit) : Unit {
-%           body {
-%               H(left);
-%               CNOT(left, right);
-%           }
-%           adjoint auto;
-%           controlled auto;
-%           controlled adjoint auto;
+%       operation PrepareEntangledPair(left : Qubit, right : Qubit) : Unit
+%       is Adj + Ctl {
+%           H(left);
+%           CNOT(left, right);
 %       }
 %   }
 % \end{lstlisting}
@@ -151,18 +147,25 @@
     morekeywords={
         namespace,
         open,
+        as,
         operation,
         function,
         body,
         adjoint,
         auto,
+        distribute,
+        self,
+        invert,
         controlled,
         let,
         set,
+        for,
+        in,
         mutable,
         using,
         borrowing,
         Adjoint,
+        Controlled,
         Qubit, Unit,
         Zero, One
     },
