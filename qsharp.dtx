@@ -14,8 +14,8 @@
 %
 % The Current Maintainer of this work is Christopher Granade (chgranad@microsoft.com).
 %
-% This work consists of the files qsharp.dtx and qsharp.ins
-% and the derived filebase qsharp.sty.
+% This work consists of the files qsharp.dtx and qsharp.ins,
+% the derived filebase qsharp.sty, and the associated installer file Install.ps1.
 %
 % \fi
 %
@@ -26,7 +26,7 @@
 %<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{qsharp}
 %<*package>
-    [2018/12/04 v0.1 Initial version.]
+    [2019/01/14 v0.3.1901.1401 Initial public version.]
 %</package>
 %
 %<*driver>
@@ -42,7 +42,7 @@
 \begin{document}
   \DocInput{qsharp.dtx}
   \PrintChanges
-  \PrintIndex
+^^A   \PrintIndex
 \end{document}
 %</driver>
 % \fi
@@ -64,6 +64,10 @@
 %   Right bracket \]     Circumflex    \^     Underscore    \_
 %   Grave accent  \`     Left brace    \{     Vertical bar  \|
 %   Right brace   \}     Tilde         \~}
+%
+%
+% \changes{v0.3.1901.1401}{2019/01/14}{Initial public version.}
+% \changes{v0.1}{2018/12/04}{Initial version.}
 %
 % \DoNotIndex{\newcommand,\newenvironment}
 %
@@ -93,14 +97,10 @@
 %
 %       /// # Summary
 %       /// Prepares $(\ket{00} + \ket{11}) / \sqrt{2}$.
-%       operation PrepareEntangledPair(left : Qubit, right : Qubit) : Unit {
-%           body {
-%               H(left);
-%               CNOT(left, right);
-%           }
-%           adjoint auto;
-%           controlled auto;
-%           controlled adjoint auto;
+%       operation PrepareEntangledPair(left : Qubit, right : Qubit) : Unit
+%       is Adj + Ctl {
+%           H(left);
+%           CNOT(left, right);
 %       }
 %   }
 % \end{lstlisting}
@@ -115,24 +115,24 @@
 % The \textsf{qsharp} package also provides a |style=qsharp| definition with some additional support for including mathematical notation from \qs~comments.
 % For example, the source code listing above was generated using the following \LaTeX~code:
 %
+% \iffalse
+% NB: We need to define a new environment type so that we don't have \end{lstlisting}
+%     twice in a row.
+% \fi
 % \lstnewenvironment{lsttexlisting}{\lstset{language=TeX}}{}
 % \begin{lsttexlisting}
 %   \begin{lstlisting}[style=QSharp]
-%     namespace Example {
-%         open Microsoft.Quantum.Primitive;
+%       namespace Example {
+%           open Microsoft.Quantum.Primitive;
 %
-%         /// # Summary
-%         /// Prepares $(\ket{00} + \ket{11}) / \sqrt{2}$.
-%         operation PrepareEntangledPair(left : Qubit, right : Qubit) : Unit {
-%             body {
-%                 H(left);
-%                 CNOT(left, right);
-%             }
-%             adjoint auto;
-%             controlled auto;
-%             controlled adjoint auto;
-%         }
-%     }
+%           /// # Summary
+%           /// Prepares $(\ket{00} + \ket{11}) / \sqrt{2}$.
+%           operation PrepareEntangledPair(left : Qubit, right : Qubit) : Unit
+%           is Adj + Ctl {
+%               H(left);
+%               CNOT(left, right);
+%           }
+%       }
 %   \end{lstlisting}
 % \end{lsttexlisting}
 %
@@ -183,18 +183,28 @@
     morekeywords={
         namespace,
         open,
+        as,
         operation,
         function,
         body,
         adjoint,
         auto,
+        distribute,
+        self,
+        invert,
         controlled,
         let,
         set,
+        for,
+        in,
         mutable,
         using,
         borrowing,
+        is,
+        Adj,
+        Ctl,
         Adjoint,
+        Controlled,
         Qubit, Unit,
         Zero, One
     },
