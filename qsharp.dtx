@@ -93,7 +93,7 @@
 %
 % \begin{lstlisting}[style=QSharp]
 %   namespace Example {
-%       open Microsoft.Quantum.Primitive;
+%       open Microsoft.Quantum.Intrinsic;
 %
 %       /// # Summary
 %       /// Prepares $(\ket{00} + \ket{11}) / \sqrt{2}$.
@@ -123,7 +123,7 @@
 % \begin{lsttexlisting}
 %   \begin{lstlisting}[style=QSharp]
 %       namespace Example {
-%           open Microsoft.Quantum.Primitive;
+%           open Microsoft.Quantum.Intrinsic;
 %
 %           /// # Summary
 %           /// Prepares $(\ket{00} + \ket{11}) / \sqrt{2}$.
@@ -208,8 +208,35 @@
         Qubit, Unit,
         Zero, One
     },
-    % Define built-in primitives as second-order keywords.
-    morekeywords=[2]{H, CNOT, I, X, Y, Z, Message},
+    % Define built-in intrinsics as second-order keywords.
+    morekeywords=[2]{
+        H,
+        CNOT,
+        I,
+        X,
+        Y,
+        Z,
+        Message,
+        Assert,
+        AssertProb,
+        CCNOT,
+        Exp,
+        ExpFrac,
+        M,
+        Measure,
+        R,
+        R1,
+        R1Frac,
+        Random,
+        Reset,
+        ResetAll,
+        RFrac,
+        Rx,
+        Ry,
+        Rz,
+        S,SWAP,
+        T
+    },
     sensitive=true,
     morecomment=[l]{//},
     morecomment=[l][\lst@commentstyle\color{doc-comment}]{///}
