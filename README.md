@@ -1,5 +1,8 @@
 # qsharp.sty #
 
+Copyright (C) 2018 by Microsoft.
+Maintained by Chris Granade (chgranad@microsoft.com).
+
 This package provides LaTeX syntax highlighting for Q#.
 
 ## Installing ##

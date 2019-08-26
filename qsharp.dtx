@@ -107,7 +107,39 @@
 %
 % \section{Usage}
 %
-% \TODO
+% For the most part, this package is used through the \textsf{listings} package.
+%
+% \subsection{\textsf{listings} Integration}
+%
+% To use this package to typeset \qs~source with \textsf{listings}, use the |language=QSharp| key when using the |{lstlisting}| environment or the |\lstinput| and |\lstverbatim| macros.
+% The \textsf{qsharp} package also provides a |style=qsharp| definition with some additional support for including mathematical notation from \qs~comments.
+% For example, the source code listing above was generated using the following \LaTeX~code:
+%
+% \lstnewenvironment{lsttexlisting}{\lstset{language=TeX}}{}
+% \begin{lsttexlisting}
+%   \begin{lstlisting}[style=QSharp]
+%     namespace Example {
+%         open Microsoft.Quantum.Primitive;
+%
+%         /// # Summary
+%         /// Prepares $(\ket{00} + \ket{11}) / \sqrt{2}$.
+%         operation PrepareEntangledPair(left : Qubit, right : Qubit) : Unit {
+%             body {
+%                 H(left);
+%                 CNOT(left, right);
+%             }
+%             adjoint auto;
+%             controlled auto;
+%             controlled adjoint auto;
+%         }
+%     }
+%   \end{lstlisting}
+% \end{lsttexlisting}
+%
+% \subsection{Macros}
+%
+% \DescribeMacro{\qs}
+% This macro provides a shorthand for correctly typesetting \qs.
 %
 % \StopEventually{}
 %
@@ -129,7 +161,7 @@
 
 %    \begin{macrocode}
 
-\newcommand{\qs}{Q\#}
+\newcommand*{\qs}{Q\#}
 
 %    \end{macrocode}
 
