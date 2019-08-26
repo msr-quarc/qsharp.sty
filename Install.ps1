@@ -15,5 +15,5 @@ Out-TeXStyleDocumentation qsharp
 Install-TeXUserResource tex/latex/qsharp qsharp.sty, qsharp.pdf
 
 if ($CTAN) {
-    Export-CTANArchive -ArchiveLayout Simple qsharp.ins, README.md, Install.ps1
+    Export-CTANArchive -ArchiveLayout Simple qsharp.ins, qsharp.pdf, README.md, Install.ps1
 }
