@@ -26,10 +26,8 @@
 %<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{qsharp}
 %<*package>
-    [2019/08/27 v0.9.1908.2701 Updated to Q# 0.9 syntax.]
+    [2019/08/27 v0.9.1908.2701 Updated to 0.9 syntax.]
 %</package>
-^^A [2019/01/14 v0.3.1901.1401 Initial public version.]
-%
 %<*driver>
 \documentclass{ltxdoc}
 \usepackage[pretty,uselistings]{revquantum}[2015/12/29]
@@ -68,6 +66,7 @@
 %   Right brace   \}     Tilde         \~}
 %
 %
+% \changes{v0.9.1908.2701}{2019/08/27}{Updated to 0.9 syntax.}
 % \changes{v0.3.1901.1401}{2019/01/14}{Initial public version.}
 % \changes{v0.1}{2018/12/04}{Initial version.}
 %
@@ -161,11 +160,14 @@
 
 % \subsection{Notation} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% \begin{macro}{\qs}
+%    \changes{v0.3.1901.1401}{2019/01/14}{Initial public version.}
 %    \begin{macrocode}
 
 \newcommand*{\qs}{Q\#}
 
 %    \end{macrocode}
+% \end{macro}
 
 % \subsection{Color Definitions} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
