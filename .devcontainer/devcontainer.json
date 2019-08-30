@@ -1,0 +1,6 @@
+{
+    "extensions": [
+        "james-yu.latex-workshop"
+    ],
+    "postCreateCommand": "/bin/bash ./.devcontainer/post-build.sh > ~/post-build.log"
+}

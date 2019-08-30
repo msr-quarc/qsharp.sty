@@ -26,9 +26,8 @@
 %<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{qsharp}
 %<*package>
-    [2019/01/14 v0.3.1901.1401 Initial public version.]
+    [2019/08/27 v0.9.1908.2701 Updated to 0.9 syntax.]
 %</package>
-%
 %<*driver>
 \documentclass{ltxdoc}
 \usepackage[pretty,uselistings]{revquantum}[2015/12/29]
@@ -36,6 +35,7 @@
 \usepackage{xcolor}
 \usepackage{qsharp}
 \usepackage{sourcecodepro}
+\usepackage[numbers]{natbib}
 \EnableCrossrefs
 \CodelineIndex
 \RecordChanges
@@ -66,6 +66,7 @@
 %   Right brace   \}     Tilde         \~}
 %
 %
+% \changes{v0.9.1908.2902}{2019/08/29}{Updated to 0.9 syntax.}
 % \changes{v0.3.1901.1401}{2019/01/14}{Initial public version.}
 % \changes{v0.1}{2018/12/04}{Initial version.}
 %
@@ -87,27 +88,59 @@
 %
 % \section{Introduction}
 %
-% The \textsf{qsharp} package provides syntax highlighting for the \qs~language \citeneed.
+% The \textsf{qsharp} package provides syntax highlighting for the \qs~language \cite{svore2018q}.
 %
 % \section{Examples}
 %
 % \begin{lstlisting}[style=QSharp]
 %   namespace Example {
-%       open Microsoft.Quantum.Primitive;
+%       open Microsoft.Quantum.Intrinsic;
 %
 %       /// # Summary
 %       /// Prepares $(\ket{00} + \ket{11}) / \sqrt{2}$.
-%       operation PrepareEntangledPair(left : Qubit, right : Qubit) : Unit {
-%           body {
-%               H(left);
-%               CNOT(left, right);
-%           }
-%           adjoint auto;
-%           controlled auto;
-%           controlled adjoint auto;
+%       operation PrepareEntangledPair(left : Qubit, right : Qubit) : Unit
+%       is Adj + Ctl {
+%           H(left);
+%           CNOT(left, right);
 %       }
 %   }
 % \end{lstlisting}
+%
+% \section{Usage}
+%
+% For the most part, this package is used through the \textsf{listings} package.
+%
+% \subsection{\textsf{listings} Integration}
+%
+% To use this package to typeset \qs~source with \textsf{listings}, use the |language=QSharp| key when using the |{lstlisting}| environment or the |\lstinput| and |\lstverbatim| macros.
+% The \textsf{qsharp} package also provides a |style=qsharp| definition with some additional support for including mathematical notation from \qs~comments.
+% For example, the source code listing above was generated using the following \LaTeX~code:
+%
+% \iffalse
+% NB: We need to define a new environment type so that we don't have \end{lstlisting}
+%     twice in a row.
+% \fi
+% \lstnewenvironment{lsttexlisting}{\lstset{language=TeX}}{}
+% \begin{lsttexlisting}
+%   \begin{lstlisting}[style=QSharp]
+%       namespace Example {
+%           open Microsoft.Quantum.Intrinsic;
+%
+%           /// # Summary
+%           /// Prepares $(\ket{00} + \ket{11}) / \sqrt{2}$.
+%           operation PrepareEntangledPair(left : Qubit, right : Qubit) : Unit
+%           is Adj + Ctl {
+%               H(left);
+%               CNOT(left, right);
+%           }
+%       }
+%   \end{lstlisting}
+% \end{lsttexlisting}
+%
+% \subsection{Macros}
+%
+% \DescribeMacro{\qs}
+% This macro provides a shorthand for correctly typesetting \qs.
 %
 % \StopEventually{}
 %
@@ -120,18 +153,21 @@
 
 %    \begin{macrocode}
 
-\usepackage{listings}
-\usepackage{xcolor}
+\RequirePackage{listings}
+\RequirePackage{xcolor}
 
 %    \end{macrocode}
 
 % \subsection{Notation} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% \begin{macro}{\qs}
+%    \changes{v0.3.1901.1401}{2019/01/14}{Initial public version.}
 %    \begin{macrocode}
 
-\newcommand{\qs}{Q\#}
+\newcommand*{\qs}{Q\#}
 
 %    \end{macrocode}
+% \end{macro}
 
 % \subsection{Color Definitions} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -151,23 +187,83 @@
     morekeywords={
         namespace,
         open,
+        as,
         operation,
         function,
+        newtype,
         body,
         adjoint,
         auto,
+        distribute,
+        self,
+        invert,
+        intrinsic,
         controlled,
         let,
         set,
+        if, 
+        elif, 
+        else,
+        repeat, 
+        until,
+        fixup,
+        while,
+        return, 
+        fail,
+        for,
+        in,
         mutable,
         using,
         borrowing,
+        within,
+        apply,
+        is,
+        Adj,
+        Ctl,
         Adjoint,
+        Controlled,
         Qubit, Unit,
-        Zero, One
+        Int, BigInt,
+        Double, 
+        Bool, 
+        String, 
+        Pauli, Result,
+        Range,
+        Zero, One,
+        true, false, 
+        PauliI, PauliX, PauliY, PauliZ,
+        new, 
+        not, and, or,        
     },
-    % Define built-in primitives as second-order keywords.
-    morekeywords=[2]{H, CNOT, I, X, Y, Z, Message},
+    % Define built-in intrinsics as second-order keywords.
+    morekeywords=[2]{
+        H,
+        CNOT,
+        I,
+        X,
+        Y,
+        Z,
+        Message,
+        Assert,
+        AssertProb,
+        CCNOT,
+        Exp,
+        ExpFrac,
+        M,
+        Measure,
+        R,
+        R1,
+        R1Frac,
+        Random,
+        Reset,
+        ResetAll,
+        RFrac,
+        Rx,
+        Ry,
+        Rz,
+        S,SWAP,
+        T
+    },
     sensitive=true,
     morecomment=[l]{//},
     morecomment=[l][\lst@commentstyle\color{doc-comment}]{///}
@@ -186,6 +282,11 @@
 }
 
 %    \end{macrocode}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \bibliographystyle{abbrvnat}
+% \bibliography{qsharp}
 
 %
 % \iffalse

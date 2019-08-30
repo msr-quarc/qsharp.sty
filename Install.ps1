@@ -28,6 +28,10 @@ param(
 
 Out-TeXStyle qsharp
 Out-TeXStyleDocumentation qsharp
+# Note that we need to also run makeindex and rerun the documentation generation.
+# TODO: contribute this back to posh-tex.
+makeindex -s gglow.ins -o qsharp.gls qsharp.glo
+Out-TeXStyleDocumentation qsharp
 
 # Record the changelog and regenerate.
 makeindex -s gglo.ist -o qsharp.gls qsharp.glo
@@ -36,5 +40,5 @@ Out-TeXStyleDocumentation qsharp
 Install-TeXUserResource tex/latex/qsharp qsharp.sty, qsharp.pdf
 
 if ($CTAN) {
-    Export-CTANArchive -ArchiveLayout Simple qsharp.ins, README.md, Install.ps1, LICENSE
+    Export-CTANArchive -ArchiveLayout Simple qsharp.ins, qsharp.pdf, README.md, Install.ps1, LICENSE
 }
