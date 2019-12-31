@@ -26,7 +26,7 @@
 %<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{qsharp}
 %<*package>
-    [2019/08/27 v0.9.1908.2701 Updated to 0.9 syntax.]
+    [2019/12/30 v0.10.1912.3001 Added literate mode.]
 %</package>
 %<*driver>
 \documentclass{ltxdoc}
@@ -66,6 +66,7 @@
 %   Right brace   \}     Tilde         \~}
 %
 %
+% \changes{v0.10.1912.3001}{2019/12/30}{Added literate mode.}
 % \changes{v0.9.1908.2902}{2019/08/29}{Updated to 0.9 syntax.}
 % \changes{v0.3.1901.1401}{2019/01/14}{Initial public version.}
 % \changes{v0.1}{2018/12/04}{Initial version.}
@@ -93,17 +94,44 @@
 % \section{Examples}
 %
 % \begin{lstlisting}[style=QSharp]
-%   namespace Example {
-%       open Microsoft.Quantum.Intrinsic;
+%     namespace Example {
+%         open Microsoft.Quantum.Intrinsic;
 %
-%       /// # Summary
-%       /// Prepares $(\ket{00} + \ket{11}) / \sqrt{2}$.
-%       operation PrepareEntangledPair(left : Qubit, right : Qubit) : Unit
-%       is Adj + Ctl {
-%           H(left);
-%           CNOT(left, right);
-%       }
-%   }
+%         /// # Summary
+%         /// Prepares a pair of qubits in an entangled state.
+%         ///
+%         /// # Description
+%         /// Prepares a pair of qubits in the $(\ket{00} + \ket{11}) / \sqrt{2}$
+%         /// state.
+%         operation PrepareEntangledPair(left : Qubit, right : Qubit) : Unit
+%         is Adj + Ctl {
+%             H(left);
+%             CNOT(left, right);
+%         }
+%     }
+% \end{lstlisting}
+%
+% Optionally, \emph{literate mode} can be used to typeset \qs~syntax like |=>|
+% and |<-| using LaTeX symbols.
+%
+% \begin{lstlisting}[style=LiterateQSharp]
+%     namespace Example {
+%         open Microsoft.Quantum.Intrinsic;
+%
+%         operation ForEachTwice<'T, 'U>(op : 'T => 'U, targets : 'T[])
+%         : ('U, 'U)[] {
+%             mutable results = new ('U, 'U)[0];
+%             for (target in targets) {
+%                 set results += (op(target), op(target));
+%             }
+%             return results;
+%         }
+%
+%         function ExceptAt<'T>(index : Int, fn : 'T -> 'T, array : 'T[]) : 'T[] {
+%             return array w/ index <- fn(array[index]);
+%         }
+%
+%     }
 % \end{lstlisting}
 %
 % \section{Usage}
@@ -114,7 +142,7 @@
 %
 % To use this package to typeset \qs~source with \textsf{listings}, use the |language=QSharp| key when using the |{lstlisting}| environment or the |\lstinput| and |\lstverbatim| macros.
 % The \textsf{qsharp} package also provides a |style=qsharp| definition with some additional support for including mathematical notation from \qs~comments.
-% For example, the source code listing above was generated using the following \LaTeX~code:
+% For example, the first source code listing above was generated using the following \LaTeX~code:
 %
 % \iffalse
 % NB: We need to define a new environment type so that we don't have \end{lstlisting}
@@ -127,7 +155,11 @@
 %           open Microsoft.Quantum.Intrinsic;
 %
 %           /// # Summary
-%           /// Prepares $(\ket{00} + \ket{11}) / \sqrt{2}$.
+%           /// Prepares a pair of qubits in an entangled state.
+%           ///
+%           /// # Description
+%           /// Prepares a pair of qubits in the $(\ket{00} + \ket{11}) / \sqrt{2}$
+%           /// state.
 %           operation PrepareEntangledPair(left : Qubit, right : Qubit) : Unit
 %           is Adj + Ctl {
 %               H(left);
@@ -136,6 +168,8 @@
 %       }
 %   \end{lstlisting}
 % \end{lsttexlisting}
+%
+% To enable literate mode, replace |style=QSharp| with |style=LiterateQSharp|.
 %
 % \subsection{Macros}
 %
@@ -233,8 +267,10 @@
         true, false, 
         PauliI, PauliX, PauliY, PauliZ,
         new, 
-        not, and, or,        
+        not, and, or,
+        w/
     },
+    alsoletter={/},
     % Define built-in intrinsics as second-order keywords.
     morekeywords=[2]{
         H,
@@ -279,6 +315,16 @@
 \lstdefinestyle{QSharp}{
     language=QSharp,
     mathescape=true
+}
+
+\lstdefinestyle{LiterateQSharp}{
+    language=QSharp,
+    mathescape=true,
+    literate={<-}{{$\leftarrow$}}1
+             {->}{{$\rightarrow$}}1
+             {=>}{{$\Rightarrow$}}2
+             {+=}{{+\kern-0.1em=}}2
+             {!=}{{$\ne$}}1
 }
 
 %    \end{macrocode}
